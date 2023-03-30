@@ -1,0 +1,15 @@
+{
+    "require": {
+        "shardj/zf1-future": "^1.22",
+        "robmorgan/phinx": "^0.13.4",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "library/"
+        }
+    },
+    "require-dev": {
+        "zf1s/phpunit": "dev-master"
+    }
+}
