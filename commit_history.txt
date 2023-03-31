@@ -1,3 +1,19 @@
+commit 3705cc00fd32a0ec6b717bb0ab4f6160abd32253
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 04:21:10 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 04:21:10 2023 -0300
+
+    Creating the README, updating .gitignore in order to include the gulp file, and sending the .env template file
+
+commit b89f7b03714302f6e0ee58b9a71edd5f90dd4ed7
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 03:57:14 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 03:57:14 2023 -0300
+
+    Start to write the README, creating some unit tests, removed the assets/js because it's not necessary, creating the file create_log_file.php to track and help scripts in composer.json to know if log folder exists or not and to avoid running the shell command every time some update is performed by composer
+
 commit 792c2dbbb6675293573d3a08d00bf4a003cc56cb
 Author:     Felipe Campelo <felipefcamp@gmail.com>
 AuthorDate: Fri Mar 31 02:23:16 2023 -0300
