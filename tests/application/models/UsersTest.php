@@ -53,14 +53,4 @@ class UsersTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedData, $createdUser, 'Created user data should match the provided data');
     }
-
-    public function testUpdateUser()
-    {
-        // Implement test logic for updating a user
-    }
-
-    public function testRemoveUser()
-    {
-        // Implement test logic for removing a user
-    }
 }
