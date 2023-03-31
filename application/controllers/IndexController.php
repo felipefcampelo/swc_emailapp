@@ -9,7 +9,18 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->messages = $this->_helper->flashMessenger->getMessages();
+        $session = new Zend_Session_Namespace('email_sent_status');
+        if (isset($session->status) && isset($session->message)) {
+            $messages = [
+                'status'  => $session->status,
+                'color'   => $session->color,
+                'message' => $session->message,
+            ];
+            $this->view->messages = $messages;
+            unset($session->status);
+            unset($session->color);
+            unset($session->message);
+        }
     }
 
     public function sendEmailAction()
@@ -31,13 +42,15 @@ class IndexController extends Zend_Controller_Action
                 $errors[] = 'Email is required.';
             } elseif (!filter_var($formData['email'], FILTER_VALIDATE_EMAIL)) {
                 $isValid = false;
-                $errors[] = 'Email is not valid.';
+                $errors[] = 'Trying to send email to an invalid Email address.';
             }
 
             // Validate content
-            if (empty($formData['email-content'])) {
+            $emailContent = strip_tags($formData['email-content']);
+            $emailContent = trim($emailContent);
+            if (empty($emailContent)) {
                 $isValid = false;
-                $errors[] = 'Content is required.';
+                $errors[] = 'Trying to send email without any content.';
             }
 
             if ($isValid) {
@@ -77,18 +90,21 @@ class IndexController extends Zend_Controller_Action
                     $this->storeSentEmail($formData['email'], $emailHtmlContent);
 
                     // Success message
-                    $this->_helper->flashMessenger->addMessage('success', 'Email sent successfully!');
-                    $this->render('index');
+                    $session = new Zend_Session_Namespace('email_sent_status');
+                    $session->status = 'success';
+                    $session->color = 'success';
+                    $session->message = "Email sent successfully!";
+                    $this->_helper->redirector('index');
                 } catch (Exception $e) {
                     // Log
                     $this->logError($e->getMessage());
 
                     // Error message
-                    $this->_helper->flashMessenger->addMessage('error', "We can't send the email.");
-
-                    $errors[] = "We can't send the email.";
-                    $this->view->errors = $errors;
-                    $this->render('index');
+                    $session = new Zend_Session_Namespace('email_sent_status');
+                    $session->status = 'error';
+                    $session->color = 'danger';
+                    $session->message = "We can't send the email. Try again later.";
+                    $this->_helper->redirector('index');
                 }
 
                 $this->_helper->redirector('index');
@@ -98,10 +114,11 @@ class IndexController extends Zend_Controller_Action
                 $this->logError($errorMsg);
 
                 // Error message
-                $this->_helper->flashMessenger->addMessage('error', $errorMsg);
-
-                $this->view->errors = $errors;
-                $this->render('index');
+                $session = new Zend_Session_Namespace('email_sent_status');
+                $session->status = 'error';
+                $session->color = 'danger';
+                $session->message = $errorMsg;
+                $this->_helper->redirector('index');
             }
         } else {
             $this->_helper->redirector('index');

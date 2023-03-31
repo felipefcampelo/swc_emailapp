@@ -36,7 +36,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $newConfigArray = ['resources' => ['db' => ['params' => $dbParams]]];
         $newConfig = new Zend_Config($newConfigArray, true);
         $config->merge($newConfig);
-
+        
         Zend_Registry::set('config', $config);
         return $config;
     }
