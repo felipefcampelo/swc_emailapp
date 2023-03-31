@@ -1,0 +1,31 @@
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
+            <span class="fs-4">Simple Email Application</span>
+        </div>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="/" class="nav-link 
+                    <?php echo ($_SERVER['REQUEST_URI'] == '/') ? "active" : ""; ?>"
+                >
+                    Send an Email
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/sent" class="nav-link 
+                    <?php echo ($_SERVER['REQUEST_URI'] == '/sent') ? "active" : ""; ?>"
+                >
+                    Sent Emails
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/about" class="nav-link 
+                    <?php echo ($_SERVER['REQUEST_URI'] == '/about') ? "active" : ""; ?>"
+                >
+                    About
+                </a>
+            </li>
+        </ul>
+    </header>
+</div>
