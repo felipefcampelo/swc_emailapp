@@ -14,16 +14,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "mkdir logs",
-            "chmod 755 logs",
-            "touch logs/error.log",
-            "chmod 644 logs/error.log"
+            "php create_log_file.php"
         ],
         "post-update-cmd": [
-            "mkdir logs",
-            "chmod 755 logs",
-            "touch logs/error.log",
-            "chmod 644 logs/error.log"
+            "php create_log_file.php"
         ]
-    }    
+    }
 }

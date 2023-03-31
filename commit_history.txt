@@ -1,0 +1,47 @@
+commit 792c2dbbb6675293573d3a08d00bf4a003cc56cb
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 02:23:16 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 02:23:16 2023 -0300
+
+    Creating a method to retrieve user id by his email and implementing the storage of the email content in the database.
+
+commit 7bddd2b963f03305bca63afd8ba5cfd5301c3f97
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 01:50:14 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 01:50:14 2023 -0300
+
+    Adjusting the logs, and the composer scripts to have the log folder correctly created. Adjusting the replacement of the placeholders in the application.ini.
+
+commit f9444b312612fd0c94d8e1c39e5e0a8d0e863441
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 00:09:31 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 00:09:31 2023 -0300
+
+    Created a folder to store the email templates. Implemented the method to send emails using the SMTP server supplied by Mailtrap. Creating scripts in composer.json to create the 'logs/error.log' file in the root to detect any issue with the email sending and implemented messages to be retrieved after sending the email. The storage of the email in the sent_emails table is not completed yet.
+
+commit e062a50b24d7b18131e66f0f50be40073933d1a4
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Thu Mar 30 22:48:18 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Thu Mar 30 22:48:18 2023 -0300
+
+    Creating the views, controllers, and routes. Creating seeders to have a list of sent emails at the beginning of the application. Implementation of the .env file, dotenv lib, and updating methods and files that use sensitive data. Will be created a .env.template file to be versioned in the future containing the structure of the env file to be used in other development environments.
+
+commit 0c272986138777b13cfca18f89d6869104160b75
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Thu Mar 30 21:02:11 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Thu Mar 30 21:02:11 2023 -0300
+
+    Creation of the phinx.php file to configure the migration lib, creating migration to the users and sent_emails tables, and creating the models to handle these tables
+
+commit 37c5e800c5c219439ec78f4b87027b618c853d2e
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Thu Mar 30 17:27:04 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Thu Mar 30 17:27:04 2023 -0300
+
+    Initial commit: composer.json, .gitignore, creating initial structures of a zend framework project
