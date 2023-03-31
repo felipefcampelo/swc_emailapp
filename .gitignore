@@ -2,4 +2,3 @@ node_modules/
 vendor/
 logs/
 .env
-gulpfile.js
