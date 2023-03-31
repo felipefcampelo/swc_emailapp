@@ -11,5 +11,19 @@
     },
     "require-dev": {
         "zf1s/phpunit": "dev-master"
-    }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "mkdir -p logs",
+            "chmod 755 logs",
+            "touch logs/error.log",
+            "chmod 644 logs/error.log"
+        ],
+        "post-update-cmd": [
+            "mkdir -p logs",
+            "chmod 755 logs",
+            "touch logs/error.log",
+            "chmod 644 logs/error.log"
+        ]
+    }    
 }

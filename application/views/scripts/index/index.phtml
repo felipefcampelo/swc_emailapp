@@ -11,10 +11,21 @@
 
 <body>
     <?php echo $this->partial('partials/header.phtml') ?>
-    
+
     <div class="container mt-5">
         <div class="col-6 m-auto">
             <h2 class="mb-4">Send an Email</h2>
+
+            <!-- Messages -->
+            <?php if (isset($this->messages['success'])) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $this->messages['success'][0]; ?>
+                </div>
+            <?php elseif (isset($this->messages['error'])) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo $this->messages['error'][0]; ?>
+                </div>
+            <?php endif; ?>
 
             <form action="<?php echo $this->url(['action' => 'send-email']); ?>" method="POST">
                 <div class="form-group">

@@ -9,7 +9,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $this->view->messages = $this->_helper->flashMessenger->getMessages();
     }
 
     public function sendEmailAction()
@@ -35,17 +35,28 @@ class IndexController extends Zend_Controller_Action
             }
 
             // Validate content
-            if (empty($formData['content'])) {
+            if (empty($formData['email-content'])) {
                 $isValid = false;
                 $errors[] = 'Content is required.';
             }
 
             if ($isValid) {
+                // Email template
+                $emailTemplate = file_get_contents(APPLICATION_PATH . '/views/email/templates/default.html');
+
+                // Formated date and time
+                $datetime = new DateTime();
+                $currentDateTime = $datetime->format('m/d/Y') . ' at ' . $datetime->format('H\hi\m\i\n');
+
+                $emailHtmlContent = str_replace('{{datetime}}', $currentDateTime, $emailTemplate);
+                $emailHtmlContent = str_replace('{{name}}', $formData['name'], $emailHtmlContent);
+                $emailHtmlContent = str_replace('{{content}}', $formData['email-content'], $emailHtmlContent);
+
                 $mail = new Zend_Mail();
-                $mail->setFrom($formData['fromEmail'], $formData['fromName'])
-                     ->addTo($formData['toEmail'], $formData['toName'])
-                     ->setSubject($formData['subject'])
-                     ->setBodyHtml($formData['emailContent']);
+                $mail->setFrom($_ENV['FROM_EMAIL'], $_ENV['FROM_NAME'])
+                    ->addTo($formData['email'], $formData['name'])
+                    ->setSubject($_ENV['EMAIL_SUBJECT'])
+                    ->setBodyHtml($emailHtmlContent);
 
                 $transport = new Zend_Mail_Transport_Smtp(
                     $_ENV['SMTP_HOST'],
@@ -59,16 +70,36 @@ class IndexController extends Zend_Controller_Action
                 );
 
                 try {
+                    // Send the email
                     $mail->send($transport);
-                    $this->view->success = "";
+
+                    // Store in the database
+                    $this->storeSentEmail($formData['email'], $emailHtmlContent);
+
+                    // Success message
+                    $this->_helper->flashMessenger->addMessage('success', 'Email sent successfully!');
                     $this->render('index');
                 } catch (Exception $e) {
-                    $this->view->fail = "";
+                    // Log
+                    $this->logError($e->getMessage());
+
+                    // Error message
+                    $this->_helper->flashMessenger->addMessage('error', "We can't send the email.");
+
+                    $errors[] = "We can't send the email.";
+                    $this->view->errors = $errors;
                     $this->render('index');
                 }
 
                 $this->_helper->redirector('index');
             } else {
+                // Log
+                $errorMsg = implode(' | ', $errors);
+                $this->logError($errorMsg);
+
+                // Error message
+                $this->_helper->flashMessenger->addMessage('error', $errorMsg);
+
                 $this->view->errors = $errors;
                 $this->render('index');
             }
@@ -84,5 +115,37 @@ class IndexController extends Zend_Controller_Action
         $sentEmails = $sentEmailsModel->fetchAllSentEmails();
 
         $this->view->sentEmails = $sentEmails;
+    }
+
+    protected function storeSentEmail($email, $emailContent)
+    {
+        $userModel = new Application_Model_Users();
+        $user = $userModel->fetchRow(['email = ?' => $email]);
+
+        if ($user) {
+            $sentEmailsModel = new Application_Model_SentEmails();
+            $data = [
+                'user_id' => $user->id,
+                'email_content' => $emailContent,
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+            $sentEmailsModel->insert($data);
+        }
+    }
+
+    // Initialize the Zend Log
+    protected function getLogger()
+    {
+        $logger = new Zend_Log();
+        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH . '/../logs/error.log');
+        $logger->addWriter($writer);
+        return $logger;
+    }
+
+    // Create a log entry
+    protected function logError($errorMessage)
+    {
+        $logger = $this->getLogger();
+        $logger->err($errorMessage);
     }
 }

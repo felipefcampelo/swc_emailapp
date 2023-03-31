@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Default Email Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img 
+            class="logo" 
+            src="https://global-uploads.webflow.com/6341448fda79c92372b010a4/63502c47c8e7bdfa7c25aefe_swapcardLogo.svg" 
+            alt="Swapcard Logo"
+        >
+        <h1>Hi! We have some news for you.</h1>
+        <p class="date">Sent on {{datetime}}</p>
+        <p>Dear {{name}},<br></p>
+        <p>{{content}}</p>
+        <p><br>Thank you for your time!</p>
+    </div>
+</body>
+
+</html>
