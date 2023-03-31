@@ -83,11 +83,34 @@ class IndexController extends Zend_Controller_Action
                 );
 
                 try {
+                    // Check user existance in the database
+                    $userData = $this->checkUser($formData['email']);
+                    
+                    if (empty($userData)) {
+                        $user_data = [
+                            'name' => $formData['name'],
+                            'email' => $formData['email'],
+                            'phone' => (!empty($formData['phone'])) ? $formData['phone'] : '',
+                        ];
+                        $usersModel = new Application_Model_Users();
+                        $userId = $usersModel->insert($user_data);
+                    } else {
+                        $userId = $userData;
+                    }
+                    
                     // Send the email
                     $mail->send($transport);
-
-                    // Store in the database
-                    $this->storeSentEmail($formData['email'], $emailHtmlContent);
+                    
+                    // Insert in the database
+                    $result = $this->storeSentEmail($userId, $formData['email-content']);
+                    
+                    if ($result == false) {
+                        $session = new Zend_Session_Namespace('email_sent_status');
+                        $session->status = 'warning';
+                        $session->color = 'warning';
+                        $session->message = "Email sent, but not stored! Error recognizing the User ID.";
+                        $this->_helper->redirector('index');
+                    }
 
                     // Success message
                     $session = new Zend_Session_Namespace('email_sent_status');
@@ -134,19 +157,29 @@ class IndexController extends Zend_Controller_Action
         $this->view->sentEmails = $sentEmails;
     }
 
-    protected function storeSentEmail($email, $emailContent)
+    protected function checkUser($email)
     {
-        $userModel = new Application_Model_Users();
-        $user = $userModel->fetchRow(['email = ?' => $email]);
+        $usersModel = new Application_Model_Users();
+        $userId = $usersModel->getUserIdByEmail($email);
+        return $userId;
+    }
 
-        if ($user) {
-            $sentEmailsModel = new Application_Model_SentEmails();
+    protected function storeSentEmail($userId, $emailContent)
+    {
+        $sentEmailsModel = new Application_Model_SentEmails();
+        
+        if ($userId !== null) {
             $data = [
-                'user_id' => $user->id,
+                'user_id' => $userId,
                 'email_content' => $emailContent,
-                'created_at' => date('Y-m-d H:i:s')
             ];
-            $sentEmailsModel->insert($data);
+
+            $result = $sentEmailsModel->insert($data);
+
+            return $result;
+        } else {
+            $this->logError("User Id not found!");
+            return false;
         }
     }
 
