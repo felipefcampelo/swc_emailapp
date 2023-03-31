@@ -1,3 +1,19 @@
+commit 6228480062f0d43a167632b0265178861076c2f8
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 04:28:06 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 04:28:06 2023 -0300
+
+    Removing the item 'About' from the menu
+
+commit 281a7f70db21077bde124ff801acdac2012abfd2
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 04:22:15 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 04:22:15 2023 -0300
+
+    Updating the commit_history file
+
 commit 3705cc00fd32a0ec6b717bb0ab4f6160abd32253
 Author:     Felipe Campelo <felipefcamp@gmail.com>
 AuthorDate: Fri Mar 31 04:21:10 2023 -0300
