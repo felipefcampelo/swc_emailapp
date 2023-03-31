@@ -1,3 +1,19 @@
+commit 1beb26737e64faeeb5eedb469366771cf8db2ade
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 04:31:09 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 04:31:09 2023 -0300
+
+    Removing tests that are not necessary in the project
+
+commit 35d75aa7fdc1f0a482dbe03e857f81f446c2e66f
+Author:     Felipe Campelo <felipefcamp@gmail.com>
+AuthorDate: Fri Mar 31 04:29:01 2023 -0300
+Commit:     Felipe Campelo <felipefcamp@gmail.com>
+CommitDate: Fri Mar 31 04:29:01 2023 -0300
+
+    Updating the commit_history file
+
 commit 6228480062f0d43a167632b0265178861076c2f8
 Author:     Felipe Campelo <felipefcamp@gmail.com>
 AuthorDate: Fri Mar 31 04:28:06 2023 -0300
